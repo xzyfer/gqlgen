@@ -12,20 +12,20 @@ type Schema struct {
 }
 
 func (s *Schema) Types() []Type {
-	typIndex := map[string]Type{}
+	typeIndex := map[string]Type{}
 	typeNames := make([]string, 0, len(s.schema.Types))
 	for _, typ := range s.schema.Types {
 		if strings.HasPrefix(typ.Name, "__") {
 			continue
 		}
 		typeNames = append(typeNames, typ.Name)
-		typIndex[typ.Name] = *WrapTypeFromDef(s.schema, typ)
+		typeIndex[typ.Name] = *WrapTypeFromDef(s.schema, typ)
 	}
 	sort.Strings(typeNames)
 
 	types := make([]Type, len(typeNames))
 	for i, t := range typeNames {
-		types[i] = typIndex[t]
+		types[i] = typeIndex[t]
 	}
 	return types
 }
